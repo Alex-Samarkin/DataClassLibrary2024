@@ -51,7 +51,35 @@ namespace DataClassLibrary2024
                 DF = DataFrame.LoadCsv(FileName, separator: CSVCfg.separator, header: true, encoding: Encoding.UTF8);
             }
         }
+        public List<string> GetColumns()
+        {
+            var res = new List<string>();
+            foreach (var col in DF.Columns)
+            {
+                res.Add(col.Name);
+            }
+            return res;
+        }
 
+        public int GetId(string columnName)
+        {
+            return DF.Columns.IndexOf(columnName);
+        }
+        public string GetColumnName(int id = 0)
+        {
+            return DF.Columns[id].Name;
+        }
+        bool IfExists(string columnName) => GetId(columnName) >=0? true : false;
+        
+        // get type of column
+        public string GetColumnType(string columnName)
+        {
+            if (IfExists(columnName))
+            {
+                return DF.Columns[GetId(columnName)].DataType.Name;
+            }
+            return string.Empty;
+        }
 
     }
 }
